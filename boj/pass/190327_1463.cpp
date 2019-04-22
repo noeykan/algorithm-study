@@ -39,7 +39,6 @@ int main(void)
 {
     int n; // 1<=n<=10^6
     cin >> n;
-
     cout << getMinCnt(n) << endl;
 
     return 0;
