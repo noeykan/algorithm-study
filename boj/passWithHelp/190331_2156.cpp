@@ -52,6 +52,6 @@ int main()
     for (int i=1; i<=d_cnt; ++i)
         cin >> d[i];
     fill_n(cache, d_cnt+1, -1); // cache를 -1로 초기화
-    cout << f(d_cnt);
+    cout << f(d_cnt) << endl;
     return 0;
 }
