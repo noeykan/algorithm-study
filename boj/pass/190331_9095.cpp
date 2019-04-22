@@ -70,8 +70,7 @@ int main()
     int integer;
     cin >> tc_cnt;
     for (int i=1; i<=tc_cnt; ++i)
-        cin >> tc[i];
-        
+        cin >> tc[i];       
     for (int i=1; i<= tc_cnt; ++i)
         cout << f(tc[i]) << endl;
 
