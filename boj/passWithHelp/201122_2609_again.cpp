@@ -1,33 +1,26 @@
 // 최대공약수와 최소공배수
 // https://www.acmicpc.net/problem/2609
-/* 생각보다 생각하는 시간이 좀 걸림 */
+/* 이미 푼 문젠데, 혹시나 해서 찾아보니 훨씬 쉬운 방법이 있어서 다시 보고 풂
+이번에 유클리드 호제법을 찾아보고 알아보는 기회가 되었음*/
 #include <iostream>
-#include <vector>
 
 using namespace std;
 
+int gcd(int a, int b)
+{
+    if (b == 0) return a;
+    return gcd(b, a%b);
+}
+
 int main()
 {
-    int a, b, ans;
+    int a, b, gcd_ans;
     cin >> a >> b;
     
-    vector<int> vec;
-
-    for (int i=1; i<=a; ++i) {
-        if (a % i == 0) {
-            vec.push_back(i);
-        }
-    }
+    gcd_ans = a>b ? gcd(a, b) : gcd(b, a);
     
-    for (int i=vec.size()-1; i>=0; --i) {
-        if (b % vec[i] == 0) {
-            ans = vec[i];
-            break;
-        }
-    }
+    cout << gcd_ans << endl;
+    cout << a * b / gcd_ans;
     
-    cout << ans << endl;
-    cout << ans * (a/ans) * (b/ans);
-
     return 0;
 }
