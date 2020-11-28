@@ -1,6 +1,6 @@
 // 숨바꼭질 6
 // https://www.acmicpc.net/problem/17087
-/* 여러 숫자의 최대공약수를 구하는 걸 고민하다가 자고 다음날 푼 문제 */
+/* 여러 숫자의 최대공약수를 구하는 걸 고민하다가 다음날 푼 문제 */
 
 #include <iostream>
 #include <algorithm>
