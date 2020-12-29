@@ -25,6 +25,8 @@ N:2 => 55
 
 int cnt[10];
 
+// 처음 푼 풀이
+/*
 int main()
 {
     int n;
@@ -47,6 +49,28 @@ int main()
         ans %= MOD;
     }
     std::cout << ans % MOD;
+    
+    return 0;
+}
+*/
+
+// 다른 사람 코드 보고 최적화 한 풀이
+int main()
+{
+    int n;
+    std::cin >> n;
+    
+    // n이 1인 경우 초기화
+    std::fill_n(cnt, 10, 1);
+    
+    // 처음 했던 풀이보다 한번 loop를 더 돌리면, cnt[0]이 지동적으로 답이 됨
+    while (n--) {
+        // cnt[9]는 항상 1이므로 계산 안함
+        for (int j=8; j>=0; --j) {
+            cnt[j] = (cnt[j] + cnt[j+1]) % MOD;
+        }
+    }
+    std::cout << cnt[0];
     
     return 0;
 }
