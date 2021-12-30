@@ -9,3 +9,5 @@ for f in fears:
         groups += 1
         members = 0
 print(members)
+
+# 20분
