@@ -10,7 +10,6 @@ print(groupCnt//2)
 # 10분
 
 # 정답지는 아래와 같은데, 내가 한 게 더 쉬워보임
-# 그리고 오타있음. range(1,len(data)) 라고 해야 할 듯
 #
 # data = input()
 # count0 = 0 # 전부 0으로 바꾸는 경우
