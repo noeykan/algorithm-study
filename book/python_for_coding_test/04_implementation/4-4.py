@@ -36,6 +36,7 @@ while True:
             else:
                 i = i_next
                 j = j_next
+                cnt_visited = 0
                 continue
         direction = dir_next
         cnt_visited += 1
