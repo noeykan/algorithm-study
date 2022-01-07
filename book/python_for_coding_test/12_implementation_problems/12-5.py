@@ -31,14 +31,14 @@ while True:
 
     # # 디버깅용 맵 print
     # print(f'{sec} sec')
-    # for i in range(N+1):
-    #     for j in range(N+1):
+    # for i in range(1, N+1):
+    #     for j in range(1, N+1):
     #         if [i, j] in apples:
     #             print('A', end='')
     #         elif [i, j] in snake:
     #             print('O', end='')
     #         else:
-    #             print('-', end='')
+    #             print('E', end='')
     #     print('')
     # print('\n')
 
