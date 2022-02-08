@@ -1,37 +1,51 @@
 import sys
 
 N, C = map(int, input().split())
-data = [sys.stdin.readline().rstrip() for _ in range(N)]
+data = [int(sys.stdin.readline().rstrip()) for _ in range(N)]
+data.sort()
 
-# 답지 코드
+def get_max_cnt(arr, gap):
+    cnt = 1
+    loc = arr[0]
+    for a in arr[1:]:
+        if (a - loc) >= gap:
+            cnt += 1
+            loc = a
+    return cnt
 
-# 집의 개수(N)와 공유기의 개수(C)를 입력 받기
-n, c = list(map(int, input().split(' ')))
+start = 1
+end = data[-1] - data[0]
 
-# 전체 집의 좌표 정보를 입력 받기
-array = []
-for _ in range(n):
-     array.append(int(input()))
-array.sort() # 이진 탐색 수행을 위해 정렬 수행
+min_gap = end
+while start <= end:
+    middle = (start + end) // 2
+    max_cnt = get_max_cnt(data, middle)
+    # ### 처음 풀었을때 틀렸던 코드 ###
+    # if max_cnt > C:
+    #     start = middle + 1
+    # elif max_cnt < C:
+    #     end = middle - 1
+    # else:
+    #     min_gap = middle
+    #     start = middle + 1
+    ######
+    if max_cnt >= C:
+        min_gap = middle
+        start = middle + 1
+    else:
+        end = middle - 1
 
-start = 1 # 가능한 최소 거리(min gap)
-end = array[-1] - array[0] # 가능한 최대 거리(max gap)
-result = 0
+print(min_gap)
 
-while(start <= end):
-    mid = (start + end) // 2 # mid는 가장 인접한 두 공유기 사이의 거리(gap)을 의미
-    # 첫째 집에는 무조건 공유기를 설치한다고 가정
-    value = array[0]
-    count = 1
-    # 현재의 mid 값을 이용해 공유기를 설치하기
-    for i in range(1, n): # 앞에서부터 차근차근 설치 
-        if array[i] >= value + mid:
-            value = array[i]
-            count += 1
-    if count >= c: # C개 이상의 공유기를 설치할 수 있는 경우, 거리를 증가시키기
-        start = mid + 1
-        result = mid # 최적의 결과를 저장
-    else: # C개 이상의 공유기를 설치할 수 없는 경우, 거리를 감소시키기
-        end = mid - 1
-
-print(result)
+# 제한시간(50분) 넘기고 하루이틀 고민하다 답 봤는데 이럴수가 이렇게 간단하다니..;;
+# 코드는 안보고 설명만 보고, 직접 코딩 해 봤는데 자꾸 에러 떠서 설마 이건가 하고 고쳤는데 답 맞음
+# 처음 풀었을 때 반례를 알고싶은데 잘 모르겠다....가 나랑 같은 질문 한 사람 있어서 알게 됨
+# (참고 https://www.acmicpc.net/board/view/74023)
+# 반례 input
+# 4 3
+# 1
+# 3
+# 5
+# 7
+# 반례를 하나하나 해보며 겨우 내 처음 풀이가 왜 틀렸었는 지 이해함...!
+# https://www.acmicpc.net/problem/2110
