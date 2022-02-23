@@ -2,12 +2,9 @@
 import sys
 input = sys.stdin.readline
 
-n, m = map(int, input().split())
-parent = [x for x in range(0, n + 1)]
-
 def find_parent(parent, x):
     if parent[x] != x:
-        find_parent(parent, parent[x])
+        return find_parent(parent, parent[x])
     return x
 
 def union_parent(parent, a, b):
@@ -18,10 +15,12 @@ def union_parent(parent, a, b):
     else:
         parent[a_p] = b_p
 
+n, m = map(int, input().split())
+parent = [x for x in range(0, n + 1)]
+
 for _ in range(m):
     a, b = map(int, input().split())
     union_parent(parent, a, b)
-    print(parent)
 
 print('각 원소가 속한 집합: ', end='')
 for i in range(1, n + 1):
