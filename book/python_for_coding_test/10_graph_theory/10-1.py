@@ -30,3 +30,5 @@ print()
 print('부모 테이블: ', end='')
 for i in range(1, n + 1):
     print(parent[i], end=' ')
+    
+# 이 문제 다시 풀어야 함
