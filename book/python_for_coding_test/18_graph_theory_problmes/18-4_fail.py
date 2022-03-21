@@ -55,4 +55,6 @@ for cost, a, b in graph:
 
 print(total_cost)
 
-# # https://www.acmicpc.net/problem/2887
+# 한 두시간 생각 했는데 결국 못풀고 답지 보고 해결
+# O(N^2)로는 절대 안됐는데 이게 안됐으면 바로 조건을 줄일 생각을 했어야 함
+# https://www.acmicpc.net/problem/2887
