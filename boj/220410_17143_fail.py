@@ -4,62 +4,56 @@
 import sys
 input = sys.stdin.readline
 
-# 1 위 / 2 아래 / 3 오른 / 4 왼
-di = [0, -1, 1, 0, 0]
-dj = [0, 0, 0, 1, -1]
+# 0 위 / 1 아래 / 2 오른 / 3 왼
+dr = [-1, 1, 0, 0]
+dc = [0, 0, 1, -1]
 
 r, c, m = map(int, input().split())
-shark = [[] for _ in range(m + 1)]
-grid = [[[] for _ in range(c + 1)] for j in range(r + 1)]
-for i in range(1, m + 1):
-    # 0,1 상어 위치(r,c) / 2 속력 / 3 이동방향 / 4 크기 / 5 생존여부(0:죽음 1:살아있음)
-    shark[i] = list(map(int, input().split())) + [1]
-    grid[shark[i][0]][shark[i][1]].append(i)
+shark = [[] for _ in range(m)]
+grid = [[None] * c for j in range(r)]
+for i in range(m):
+    # 0,1 상어 위치(r,c) / 2 속력 / 3 이동방향 / 4 크기
+    row, col, vel, dr, wg = list(map(int, input().split()))
+    # 기준을 0으로 만듦
+    shark[i] = [row - 1, col - 1, vel, dr - 1, wg]
+    grid[shark[i][0]][shark[i][1]] = i
 
 shark_weight = 0
-for col in range(1, c + 1):
+for col in range(c):
     # 상어 잡기
-    for row in range(1, r + 1):
+    for row in range(r):
         # 가장 가까운 상어 한마리 잡음
-        if len(grid[row][col]) == 1:
-            caught = grid[row][col][0]
-            grid[row][col].remove(caught)
-            shark[caught][5] = 0
+        caught = grid[row][col]
+        if caught is not None:
             shark_weight += shark[caught][4]
+            del shark[caught]
             break
-        elif len(grid[row][col]) > 1:
-            print(f"Error. 상어가 grid[{row}][{col}]에 2마리 이상 있음")
-            exit(0)
 
     # 상어 이동
-    for i in range(1, m + 1):
-        # 살아있을 시
-        if shark[i][5] == 1:
-            grid[shark[i][0]][shark[i][1]].remove(i)
-            # 1  2  3  4
-            # ->            1
-            #    ->         2
-            #       ->     [3] -> 속도가 1000이면
-            #          ->
-            #       <-
-            #    <-
-            # <-
-            #    ->         8 위치 2
-            #       ->     [9]
-            #
-            # 상어 이동.. 이부분 어떻게..?
-            #
-            grid[shark[i][0]][shark[i][1]].append(i)
+    tmp = [[None] * c for j in range(r)]
+    for i in range(m):
+        sr, sc, v, d, w = shark[i]
+        # gg...
+        nr = sr + dr[d] * v
+        nc = sc + dc[d] * v
 
-    # 상어 중복 처리
-    for row in range(1, r + 1):
-        for col in range(1, c + 1):
-            if len(grid[row][col]) > 1:
-                # 몸무게 순으로 내림차순 정렬
-                grid[row][col].sort(key=lambda i: shark[i][4], reverse=True)
-                for i in range(1, len(grid[row][col])):
-                    dead = grid[row][col][i]
-                    grid[row][col].remove(dead)
-                    shark[dead][5] = 0
+    grid = tmp
 
 print(shark_weight)
+
+# 결국 상어 이동하는 부분(방향전환)이 핵심이고 이거 때문에 몇시간을 날렸음...
+# 0  1  2  3                   1을빼줌
+# ->            0      0 + 0   -1
+#    ->         1      0 + 1    0 : 몫 0 나머지 0
+#       ->     [2]     0 + 2    1 : 몫 0 나머지 1
+#          ->   3      0 + 3    2 : 몫 0 나머지 2
+#       <-      4(2)   3 - 1    3 : 몫 1 나머지 0
+#    <-       [[5(1)]] 3 - 2    4 : 몫 1 나머지 1
+# <-            6(0)   3 - 3    5 : 몫 1 나머지 2
+#    ->         7(1)   0 + 1    6 : 몫 2 나머지 0
+#       ->     [8(2)]  0 + 2    7 : 몫 2 나머지 1
+#          ->   9(3)
+#       <-      10(2)
+#    <-       [[11(1)]]
+# <-            12(0)
+#
